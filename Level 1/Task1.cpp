@@ -1,3 +1,9 @@
+/* C++ Program to implement simple calculator 
+The program uses factory method pattern to implement different simple mathematical calculations :-
+								addition, subtraction, multiplication and division
+Also, it uses file structures to store and view hihistory
+*/
+
 #include <iostream>
 #include <fstream>
 #include <cstdlib> // For exit()
@@ -5,36 +11,36 @@
 #include <conio.h>
 using namespace std;
 
-void viewhistory(){
-	ifstream file("Record.txt");
-	if (!file)
+void viewhistory(){								// displays records of calculation previously carried out by reading from file
+	ifstream file("Record.txt");				// opens file for reading
+	if (!file)									// handles error
 		cout << "Unable to open file";
 	else {
 		cout << "\n\t Your history is : \n";
 		char ch;
-		while (file.get(ch))
-			cout << ch;
+		while (file.get(ch))					// get characters from file
+			cout << ch;							// displays history
 		cout << endl;
 	}
-	file.close();
+	file.close();								// close the file
 }
 
 void deletehistory(){
-	int status = remove("Record.txt");
+	int status = remove("Record.txt");			// delete the history stored in file
 	if (status != 0)
-		perror("Error deleting history");
+		perror("Error deleting history");		// displays error if any
 	else
 		cout << "History cleared" << endl;
 }
 
-class operation {
+class operation {								// cretes a base class
 public:
 	float x, y;
-	virtual void input() {
+	virtual void input() {						// creates virtual function so that classes inherating the class could use to take input
 		while (true) {
 			cout << "Enter first number: ";
 			cin >> x;
-			if (cin.fail()) {
+			if (cin.fail()) {					// handles input error
 				cin.clear();
 				cin.ignore(numeric_limits<streamsize>::max(), '\n');
 				cout << "Invalid input. Please enter a numeric value." << endl;
@@ -54,10 +60,11 @@ public:
 			break;
 		}
 	}
-	virtual float operate() {
+	virtual float operate() {					// virtual function to implement the actual operation
 		return 0.0f;
 	}
-	virtual void record(char ch){
+
+	virtual void record(char ch){				// function to keep the track of history by using file
 		ofstream w("Record.txt", ios::app);
 		if (!w)
 			cout << "Error opening file!" << endl;
@@ -68,41 +75,41 @@ public:
 	}
 };
 
-class addition : public operation {
+class addition : public operation {				// class for performing addition that inherits the baase class
 public:
-	virtual float operate() override {
+	virtual float operate() override {			// owrriddes the function to perform addition
 		return x + y;
 	}
 };
 
-class subtraction : public operation {
+class subtraction : public operation {				// class for performing subtraction that inherits the baase class
 public:
-	virtual float operate() override {
+	virtual float operate() override {			// owrriddes the function to perform subtraction
 		return x - y;
 	}
 };
 
-class multiplication : public operation {
+class multiplication : public operation {				// class for performing multiplication that inherits the baase class
 public:
-	virtual float operate() override {
+	virtual float operate() override {			// owrriddes the function to perform multiplication
 		return x * y;
 	}
 };
 
-class division : public operation {
+class division : public operation {				// class for performing division that inherits the baase class
 public:
-	virtual float operate() override {
-		if (y == 0) {
+	virtual float operate() override {			// owrriddes the function to perform division
+		if (y == 0) {																// handles  division by zero
 			cout << "Error: Division by zero is not allowed." << endl;
-			return std::numeric_limits<float>::infinity();
+			return std::numeric_limits<float>::infinity();							// returns infinity if tried to divide by zero
 		}
 		return x / y;
 	}
 };
 
-class Factory {
+class Factory {											// class to generate child class on the basis of operation that is intended to perform
 public:
-	operation* getFactory(char ch) {
+	operation* getFactory(char ch) {					// function for returning different class during run time
 		switch (ch) {
 			case '+':
 				return new addition();
@@ -122,10 +129,10 @@ public:
 
 int main() {
 	int choice;
-	Factory *fac = new Factory();
+	Factory *fac = new Factory();						// making instance of object for getting the respective class
 	
 	char ch;
-	while (true) {
+	while (true) {										// loop for taking user choice after each operation
 		system("cls");
 		cout << "\t\t Welcome to Calculator \n";
 		cout << "\t 1. Addition \n";
@@ -149,7 +156,7 @@ int main() {
 		
 		operation *op = NULL;
 		
-		switch (choice) {
+		switch (choice) {								// switch case to call factory on the basis of user's choice
 			case 1: {
 				op = fac->getFactory('+');
 				ch = '+';
@@ -185,14 +192,14 @@ int main() {
 				cout << "Invalid choice. Please try again." << endl;
 				break;
 		}
-		if(op!=NULL){
+		if(op!=NULL){								// checks if the instance is created or not for the operation
 			op->input();
 			cout << "Result is: " << op->operate() << endl;
 			op->record(ch);
 		}
 		cout << endl;
 		cout << "Print any key to continue ...";
-		getch();
+		getch();											// pause the screen after final output is shown
 	}
 	return 0;
 }

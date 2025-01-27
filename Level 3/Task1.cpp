@@ -1,3 +1,5 @@
+// C++ program to handle to create the simulation of simple file system
+
 #include <iostream>
 #include <dirent.h>
 #include <sys/stat.h>
@@ -6,14 +8,13 @@
 #include <limits>
 #include <conio.h>
 #include <fstream>
-#include <string>
 #include <vector>
 
 using namespace std;
 const char* path = "."; // Current directory.
 
+// Function to view files in current  directory
 struct dirent* viewDirectory() {
-    
     DIR* dir = opendir(path);
 
     if (dir == NULL) {
@@ -43,6 +44,7 @@ struct dirent* viewDirectory() {
     return entry;
 }
 
+// creates a new file in current directory
 int createFile(){
     char filename[30];
     int flag=0;
@@ -59,7 +61,7 @@ int createFile(){
     }
 
     while ((entry = readdir(dir)) != NULL) {
-        if (strcmp(entry->d_name, filename) == 0) {
+        if (strcmp(entry->d_name, filename) == 0) {     // checkes if the file with entered namme already exist in the directory
             flag = 1;
             break;
         }
@@ -79,6 +81,7 @@ int createFile(){
         cout << "File with given name exists in the directory. Try with different name.";	
 }
 
+// function to check if therfe is file with entered name already exists
 bool fileExists(const char* filename) {
     struct stat buffer;
     return (stat(filename, &buffer) == 0);
@@ -114,14 +117,14 @@ int writeIntoFile() {
     return 1;
 }
 
-
+// function to display all the contents of a file
 void display(){
     char filename[30];
     cout << "Enter the filename to display contents: ";
     cin.ignore(); // To ignore any leftover newline character in the input buffer
     cin.getline(filename, 30);
 
-    if (!fileExists(filename)) {
+    if (!fileExists(filename)) {                        // handles absence of file with entered name
         cout << "\nError: File does not exist.\n";
         return ;
     }
@@ -135,7 +138,7 @@ void display(){
     cout << "----------------------------------------\n";
 
     string line;
-    while (getline(file, line)) {
+    while (getline(file, line)) {   // reaads the content line wise
         cout << line << endl;
     }
 
@@ -144,6 +147,7 @@ void display(){
     cout << "End of file.\n";
 }
 
+// function to modify a file
 int modify(){
     char filename[30];
     cout << "Enter name of the file you want to modify : ";
@@ -254,13 +258,14 @@ int modify(){
     }
 
     // Exit message
-    if (!saveFlag) {
+    if (!saveFlag) {                        // automatically exits after saving using ctrl+s
         cout << "\nExiting without saving changes.\n";
     } else {
         cout << "\nChanges saved to file.\n";
     }
 }
 
+// function to erase the content of a file
 int eraseContent(){
     char filename[30];
     cout << "Enter name of the file you want to delete : ";
@@ -279,6 +284,7 @@ int eraseContent(){
     w.close();
 }
 
+// deletes a file with entered name
 void deleteFile(){
     char filename[30];
     cout << "Enter name of the file you want to delete : ";
@@ -294,7 +300,7 @@ void deleteFile(){
 int main(){
     int choice;
 	char ch;
-	while (true) {
+	while (true) {                              // loops infinite
 		system("cls");
 		cout << "\t\t Welcome to Simple File System Simulation \n";
 		cout << "\t 1. View files in current directory \n";
@@ -353,7 +359,7 @@ int main(){
 				deleteFile();
 				break;
 			}
-			case 8:
+			case 8:                                             // exit the loop only if user enters correct option for exit
 				cout << "Exiting program." << endl;
 				exit(0);
 			default:

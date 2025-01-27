@@ -1,3 +1,5 @@
+// C++ program to handle consumer side of producer-consumer problem using semaphore and mutex
+
 #include <iostream>
 #include <fstream>
 #include <pthread.h>

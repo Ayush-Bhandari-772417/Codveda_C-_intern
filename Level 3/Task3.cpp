@@ -1,3 +1,5 @@
+// C++ program for Tic-Tac_Toe game. It uses map and tuples to store boundary of a box as well as the winning condition
+
 #include <graphics.h>
 #include <iostream>
 #include <cstring>
@@ -6,7 +8,7 @@
 
 using namespace std;
 
-map<int, tuple<int, int, int, int>> gridInfo(int size) {
+map<int, tuple<int, int, int, int>> gridInfo(int size) {		// records boundary of a box using map and tuple for grid with given size
 	map<int, tuple<int, int, int, int>> dictionary;
 	int c=1, r=size/2;
 	for(int i=(size+r); i<=3*size+r; i=i+size)
@@ -16,7 +18,7 @@ map<int, tuple<int, int, int, int>> gridInfo(int size) {
 	return dictionary;
 }
 
-map<int, tuple<int, int, int>> winningsituation() {
+map<int, tuple<int, int, int>> winningsituation() {				// records wining scenarios
 	map<int, tuple<int, int, int>> dictionary;
 	dictionary[1] = make_tuple(1, 2, 3);
 	dictionary[2] = make_tuple(1, 5, 9);
@@ -29,18 +31,18 @@ map<int, tuple<int, int, int>> winningsituation() {
 	return dictionary;
 }
 
-bool checkWin(map<int, char> &board, char symbol) {
+bool checkWin(map<int, char> &board, char symbol) {					// checks wether the nought or cross has won the game
 	map<int, tuple<int, int, int>> win = winningsituation();
 	for (auto &situation : win) {
 		int a, b, c;
 		tie(a, b, c) = situation.second;
-		if (board[a] == symbol && board[b] == symbol && board[c] == symbol)
+		if (board[a] == symbol && board[b] == symbol && board[c] == symbol)			// if any winning condition is met, it returns true
 			return true;
 	}
 	return false;
 }
 
-void makegrid(int size){
+void makegrid(int size){		// make grid for the gamed with given size
 	int p1, p2, p3, p4;
 	p1 = size;
 	p2 = 2*size;
@@ -52,30 +54,12 @@ void makegrid(int size){
 	line(p3, p1, p3, p4);
 }
 
-void fillcircle(int size){
-	int r=size/2;
-	for(int i=(size+r); i<=3*size+r; i=i+size)
-		for(int j=(size+r); j<=3*size+r; j=j+size)
-			circle(i,j,r);
-}
-
-void fillcross(int size){
-	int r=size/2;
-	for(int i=(size+r); i<=3*size+r; i=i+size)
-		for(int j=(size+r); j<=3*size+r; j=j+size){
-			line(i,j,i+r,j+r);
-			line(i,j,i+r,j-r);
-			line(i,j,i-r,j+r);
-			line(i,j,i-r,j-r);
-		}
-}
-
-void drawX(int x1, int y1, int x2, int y2) {
+void drawX(int x1, int y1, int x2, int y2) {	// draw cross inside the given box
 	line(x1, y1, x2, y2);
 	line(x1, y2, x2, y1);
 }
 
-void drawO(int x1, int y1, int x2, int y2) {
+void drawO(int x1, int y1, int x2, int y2) {	// draw circle inside the given box
 	int radius = (x2 - x1) / 2;
 	int centerX = (x1 + x2) / 2;
 	int centerY = (y1 + y2) / 2;
@@ -94,11 +78,13 @@ int main() {
 		board[i] = ' ';
 	}
 	cout << "\n\t\t Welcome to Tic-Tac-Toe" << endl;
+	// asks for player's name
 	cout << "Enter name of the first player : ";
 	cin.getline(player1,30);
 	cout << "Enter name of the second player : ";
 	cin.getline(player2,30);
 	while(true){
+		// asks for player's choice and loop untill correct choice is made
 		cout << player1 << "'s choice selection" << endl;
 		cout << "\t\t1. Noughts" << endl;
 		cout << "\t\t2. Crosses" << endl;

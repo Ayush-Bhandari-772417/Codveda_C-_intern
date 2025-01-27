@@ -1,12 +1,14 @@
+// C++ program to make a number guessing game
+
 #include<iostream>
 #include<cstdlib>
 #include<ctime>
 #include<limits>
 using namespace std;
 
-int no_of_chances = 5;
+int no_of_chances = 5;							// maximum numbers of chances a player can have
 
-void information(int x, int y){
+void information(int x, int y){					// function to display hints on the basis of input
 	if(abs(x-y)<=10)
 		cout << "You are too close to the number." << endl;
 	else if((x-y)>100)
@@ -18,8 +20,8 @@ void information(int x, int y){
 }
 
 int main(){
-	srand(time(0));
-	int num = rand();
+	srand(time(0));								// use time of the device to generate a random number
+	int num = rand();							// generates random number
 //	cout << num;
 	int guess, flag=0;
 	cout << "\n\t *** Welcome to number guessing game ***";
@@ -31,9 +33,9 @@ int main(){
 		 << " Otherwise, you will loose the game" <<"\n______________________________________________________";
 	for(int i=1; i<=no_of_chances; i++){
 		cout << "\n\n Guess a number \n\t Chance " << i << " off " << no_of_chances << " : ";
-		while (true) {
+		while (true) {							// loop to be executed when wrong format of input is given
 			cin >> guess;
-			if (cin.fail()) {
+			if (cin.fail()) {					// handles input error
 				cin.clear();
 				cin.ignore(numeric_limits<streamsize>::max(), '\n');
 				cout << "You didn't enter an integer. Please enter a number as the chance " << i << " " <<endl;
@@ -41,13 +43,13 @@ int main(){
 			}
 			break;
 		}
-		if(num == guess){
+		if(num == guess){						// checks whether the entered number is corrector not
 			flag = 1;
-			break;
+			break;								// ends the loop if correct number is enetred before turn finishes
 		}
 		information(guess, num);
 	}
-	if(num == guess){
+	if(num == guess){							// checks whether the player has won or not.
 		cout << "\n\n\t You correctly guessed the number." << endl << "\n\t    You won the game !!! \n";
 	}
 	else{

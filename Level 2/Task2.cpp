@@ -1,3 +1,5 @@
+// C++ program to implement sorting and searching algorithm
+
 #include <iostream>
 #include <chrono>
 using namespace std;
@@ -58,6 +60,7 @@ int* mergeSort(const int* arr, int size) {
     return result;
 }
 
+// Function to copy one array to another
 int* copy(const int* arr, int n) {
     int* result = new int[n];
     for (int i = 0; i < n; i++) {
@@ -115,6 +118,7 @@ void quickSortHelper(int* arr, int low, int high) {
     }
 }
 
+// Function to implent quicksort
 int* quickSort(const int* arr, int n) {
     if (n <= 1) {
         int* baseCase = new int[n];
@@ -127,6 +131,7 @@ int* quickSort(const int* arr, int n) {
     return result;
 }
 
+// Function to search input/entered number using linear search
 int linearSearch(int arr[], int size, int item){
     for(int i=0; i<size; i++)
         if(arr[i]==item)
@@ -134,6 +139,7 @@ int linearSearch(int arr[], int size, int item){
     return 0;
 }
 
+// Function to search input/entered number using binary search
 int binarySearch(int arr[], int size, int item){
     int beg = 0, end = size - 1;
     while (beg <= end) {
@@ -148,6 +154,7 @@ int binarySearch(int arr[], int size, int item){
     return 0;
 }
 
+// Function to verify if all algorithms results in same sorted order
 int check(const int* arr1, const int* arr2, const int* arr3, int n) {
     int flag=1,i;
     for (i=0; i<n; i++){
@@ -168,46 +175,43 @@ int main() {
     // Input array elements
     int* arr = new int[size];
     cout << "Enter " << size << " numbers to be sorted: ";
-    for (int i = 0; i < size; ++i) {
+    for (int i = 0; i < size; ++i) {                        // displays sorted array
         cin >> arr[i];
     }
 
     // Perform sorts
-    auto start = high_resolution_clock::now();
-    int* sortedArray_merge = mergeSort(arr, size);
-    auto stop = high_resolution_clock::now();
-    auto duration = duration_cast<microseconds>(stop - start);
+    auto start = high_resolution_clock::now();                              // records time before calling for sorting
+    int* sortedArray_merge = mergeSort(arr, size);                          // applies merge sort algorithm to sort array
+    auto stop = high_resolution_clock::now();                              // records time after calling for sorting
+    auto duration = duration_cast<microseconds>(stop - start);              // calculates time taken
     cout << "Time taken by merge sort: " << duration.count() << " microseconds" << endl;
 
     start = high_resolution_clock::now();
-    int* sortedArray_bubble = bubbleSort(arr, size);
+    int* sortedArray_bubble = bubbleSort(arr, size);                          // applies bubble sort algorithm to sort array
     stop = high_resolution_clock::now();
     duration = duration_cast<microseconds>(stop - start);
     cout << "Time taken by bubble sort: " << duration.count() << " microseconds" << endl;
 
     start = high_resolution_clock::now();
-    int* sortedArray_quick = quickSort(arr, size);
+    int* sortedArray_quick = quickSort(arr, size);                          // applies quick sort algorithm to sort array
     stop = high_resolution_clock::now();
     duration = duration_cast<microseconds>(stop - start);
     cout << "Time taken by quick sort: " << duration.count() << " microseconds" << endl;
     
-    
-
     // Output the sorted array
     cout << "The sorted numbers are: ";
-    for (int i = 0; i < size; ++i) {
+    for (int i = 0; i < size; ++i)
         cout << sortedArray_merge[i] << " ";
-    }
     cout << endl;
 
-    if(!check(sortedArray_merge, sortedArray_bubble, sortedArray_quick, size))
+    if(!check(sortedArray_merge, sortedArray_bubble, sortedArray_quick, size))      // compares result of each sorting algorithm
         cout << "Some sorting algoriths are mistakenly implemented"<<endl;
 
     cout << "Enter number to be searched : ";
     cin >> num;
 
     start = high_resolution_clock::now();
-    if(binarySearch(sortedArray_bubble, size, num))
+    if(binarySearch(sortedArray_bubble, size, num))                 // calls function to implement binary search algorithm
         cout << "Item found using binary search" << endl;
     else
         cout << "Item not found using binary search" << endl;
@@ -216,7 +220,7 @@ int main() {
     cout << "Time taken to search element by binary search: " << duration.count() << " microseconds" << endl;
     
     start = high_resolution_clock::now();
-    if(linearSearch(sortedArray_bubble, size, num))
+    if(linearSearch(sortedArray_bubble, size, num))                 // calls function to implement linear search algorithm
         cout << "Item found using linear search"<< endl;
     else
         cout << "Item not found using linear search"<< endl;

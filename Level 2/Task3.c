@@ -1,26 +1,29 @@
+// C program for Data Structure Implementation using array
+
 #include <stdio.h>
 #include <conio.h>
 #include <windows.h>
-#define maxsize 5
 
+// functions and global variable to implement queue
+#define maxsize 5
 void enqueue();
 void dequeue();
 void display_all_stack();
 void display_front();
 void display_rear();
 
+// functions and global variable to implement queue
 int front = 0, rear = -1, queue[maxsize];
-
 int top = -1;
 int max_size=5;
 int stack[5];
-
 void push();
 void pop();
 void display_all_queue();
 void display_top();
 void stack_();
 
+// interface for operation related to stack
 void stack_() {
     int ch;
     while(1) {
@@ -101,6 +104,7 @@ void display_top(){
     getch();
 }
 
+// interface for operation related to queue
 void queue_() {
     int ch;
     while(1){
@@ -192,6 +196,7 @@ void display_rear(){
     getch();
 }
 
+// main program to allow user to implement stack or queue
 int main() {
     int ch;
     while(1) {
